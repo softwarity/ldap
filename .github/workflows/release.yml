@@ -1,0 +1,21 @@
+name: Create Tag
+run-name: ${{ github.actor }} run build on ${{ github.repository }}
+on:
+  workflow_dispatch:
+env:
+  REGISTRY: ghcr.io
+jobs:
+  build-spring-angular:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }} # Ceci est necessaire car l'utilisateur par default du workflow, ne DECLENCHE PAS les actions
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: liberica
+      - run: |
+          mvn -Dmaven.test.skip=true release:prepare
+          git push --all
+          git push --tags
