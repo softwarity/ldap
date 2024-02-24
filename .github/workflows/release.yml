@@ -16,6 +16,9 @@ jobs:
           java-version: 17
           distribution: liberica
       - run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email ""
+      - run: |
           mvn -Dmaven.test.skip=true release:prepare
           git push --all
           git push --tags
