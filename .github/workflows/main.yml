@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
 jobs:
-  build-spring-angular:
+  build-java:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
