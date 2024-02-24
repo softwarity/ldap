@@ -5,7 +5,7 @@ on:
 env:
   REGISTRY: ghcr.io
 jobs:
-  build-spring-angular:
+  create-tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
