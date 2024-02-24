@@ -1,4 +1,4 @@
-name: Publish archway to registry
+name: Publish ldap to registry
 run-name: ${{ github.actor }} run build on ${{ github.repository }}
 on:
   push:
