@@ -20,20 +20,20 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-public class MySSLSocketFactory extends SSLSocketFactory {
+public class LdapSSLSocketFactory extends SSLSocketFactory {
     private SSLSocketFactory socketFactory;
 
     private static Map<String, String> certs = new HashMap<>();
 
     public static void addCert(String alias, String cert) {
-        MySSLSocketFactory.certs.put(alias, cert);
+        LdapSSLSocketFactory.certs.put(alias, cert);
     }
 
-    public MySSLSocketFactory() {
+    public LdapSSLSocketFactory() {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);  // load an empty keystore
-            MySSLSocketFactory.certs.entrySet().forEach((Entry<String, String> entry) -> {
+            LdapSSLSocketFactory.certs.entrySet().forEach((Entry<String, String> entry) -> {
                 try {
                     if (Objects.nonNull(entry.getValue())) {
                         try (InputStream certIn = new ByteArrayInputStream(entry.getValue().getBytes())) {
@@ -60,7 +60,7 @@ public class MySSLSocketFactory extends SSLSocketFactory {
     }
 
     public static SocketFactory getDefault() {
-        return new MySSLSocketFactory();
+        return new LdapSSLSocketFactory();
     }
 
     @Override

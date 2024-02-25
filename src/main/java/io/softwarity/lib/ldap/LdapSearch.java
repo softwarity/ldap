@@ -66,13 +66,15 @@ public class LdapSearch {
      * @throws IOException
      * @throws NamingException
      */
-    public StartTlsResponse addZZOption(InitialLdapContext context, String cert) throws IOException, NamingException {
+    public StartTlsResponse addZZOption(InitialLdapContext context, String cert, boolean ignoreCertHostname) throws IOException, NamingException {
         StartTlsResponse tls = (StartTlsResponse) context.extendedOperation(new StartTlsRequest());
         try {
             // get SSL context linked with KeyStore
             SSLContext sslContext = getSSLContext(cert);
-            // Install hostname verifier
-            tls.setHostnameVerifier(new HostNameVerifier());
+            // Install hostname verifie
+            if (ignoreCertHostname) {
+                tls.setHostnameVerifier(new IgnoreHostNameVerifier());
+            }
             // Perform TLS negotiations
             tls.negotiate(sslContext.getSocketFactory());
         } catch(Throwable t) {

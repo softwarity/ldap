@@ -22,4 +22,6 @@ public class LdapConfiguration {
   String filter;
   // Public LDAP Certificat
   String cert;
+  // Ignore certificate hostname
+  boolean ignoreCertHostname = false;
 }

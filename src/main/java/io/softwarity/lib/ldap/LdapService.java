@@ -30,8 +30,8 @@ public class LdapService {
     "*"
   };
 
-  public LdapService(LdapSearch ldapSearch) {
-    this.ldapSearch = ldapSearch;
+  public LdapService() {
+    this.ldapSearch = new LdapSearch();
   }
 
   /**
@@ -77,17 +77,18 @@ public class LdapService {
     String filter = ldapConf.getFilter(); // filter
     String userDnPattern = ldapConf.getBindDN(); // userDnPattern
     String cert = ldapConf.getCert();
+    boolean ignoreCertHostname = ldapConf.isIgnoreCertHostname();
     String D = ldapSearch.createBindPrincipal(searchUser, userDnPattern); // Use the Distinguished Name binddn to bind to the LDAP directory. For SASL binds, the server is expected to ignore this value.
     InitialLdapContext context = null;
     StartTlsResponse tls = null;
     try {
       context = ldapSearch.initContext(url);
       if (zz) {
-        tls = ldapSearch.addZZOption(context, cert);
+        tls = ldapSearch.addZZOption(context, cert, ignoreCertHostname);
       }
       if (url.toLowerCase().startsWith("ldaps")) {
-        MySSLSocketFactory.addCert("ldap", cert);
-        context.addToEnvironment("java.naming.ldap.factory.socket", MySSLSocketFactory.class.getName());
+        LdapSSLSocketFactory.addCert("ldap", cert);
+        context.addToEnvironment("java.naming.ldap.factory.socket", LdapSSLSocketFactory.class.getName());
       }
 
       ldapSearch.connect(context, D, w);
