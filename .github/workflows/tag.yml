@@ -1,10 +1,10 @@
-name: Publish ldap to registry
+name: Build tag
 run-name: ${{ github.actor }} run build on ${{ github.repository }}
 on:
   workflow_dispatch:
   push:
     tags:
-      - '18'
+      - '*'
 jobs:
   publish-artifact:
     runs-on: ubuntu-latest
