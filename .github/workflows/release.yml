@@ -20,5 +20,8 @@ jobs:
           git config user.email ""
       - run: |
           mvn -Dmaven.test.skip=true --batch-mode release:prepare
+          mvn -Dmaven.test.skip=true --batch-mode release:perform
           git status
         # git push origin main --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
