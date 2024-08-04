@@ -20,4 +20,5 @@ jobs:
           git config user.email ""
       - run: |
           mvn -Dmaven.test.skip=true --batch-mode release:prepare
-          git push --tags
+          git status
+        # git push origin main --tags
