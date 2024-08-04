@@ -14,6 +14,4 @@ jobs:
         with:
           java-version: 17
           distribution: liberica
-      - run: mvn -Dmaven.test.skip=true release:perform
-        env:
-          GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
+      - run: mvn -Dmaven.test.skip=true package

@@ -1,4 +1,4 @@
-name: Build
+name: Build & Publish
 run-name: ${{ github.actor }} run build on ${{ github.repository }}
 on:
   workflow_dispatch:
