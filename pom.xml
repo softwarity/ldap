@@ -4,6 +4,7 @@
   <artifactId>ldap</artifactId>
   <packaging>jar</packaging>
   <version>1.0.4-SNAPSHOT</version>
+  <url>https://github.com/softwarity/ldap</url>
   <name>ldap</name>
   <description>A Java reactive library for LDAP Authentication</description>
   <properties>
