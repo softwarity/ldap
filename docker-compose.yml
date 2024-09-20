@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    environment:
+      LDAP_ORGANISATION: "Example Inc."
+      LDAP_DOMAIN: "example.com"
+      LDAP_ADMIN_PASSWORD: "adminpassword"
+      LDAP_TLS: "false"
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - /home/francois/Workspaces/softwarity/ldap/src/test/resources/init.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/init.ldif:ro
+    command: --copy-service
+    restart: always
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: ldap
+    ports:
+      - "6443:443"
+    depends_on:
+      - ldap
+    restart: always

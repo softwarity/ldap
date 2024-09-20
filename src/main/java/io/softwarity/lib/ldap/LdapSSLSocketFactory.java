@@ -11,8 +11,8 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateFactory;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.KeyManagerFactory;
@@ -20,6 +20,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class LdapSSLSocketFactory extends SSLSocketFactory {
     private SSLSocketFactory socketFactory;
 
@@ -41,7 +44,7 @@ public class LdapSSLSocketFactory extends SSLSocketFactory {
                         }
                     }
                 } catch (Exception ex) {
-                    ex.printStackTrace(System.err);
+                    log.warn(ex.getMessage(), ex);
                 }
             });
 
@@ -55,7 +58,7 @@ public class LdapSSLSocketFactory extends SSLSocketFactory {
             sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
             socketFactory = sslContext.getSocketFactory();
         } catch (Exception ex) {
-            ex.printStackTrace(System.err);
+            log.warn(ex.getMessage(), ex);
         }
     }
 

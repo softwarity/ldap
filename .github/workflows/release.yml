@@ -1,22 +1,30 @@
-name: Create release
-run-name: ${{ github.actor }} run build on ${{ github.repository }}
+name: release
+run-name: Release, create tag and push to ${{ github.repository }}
 on:
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
 jobs:
-  create-release:
+  create-tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT_TOKEN }} # Ceci est necessaire car l'utilisateur par default du workflow, ne DECLENCHE PAS les actions
-      - uses: actions/setup-java@v3
+      - name: Setup git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email ""
+      - name: Set up java/maven       
+        uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: liberica
-      - run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email ""
-      - run: |
+          gpg-passphrase: GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+      - name: Create tag
+        run: |
           mvn -Dmaven.test.skip=true --batch-mode release:prepare
+          git push origin main --tags
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
