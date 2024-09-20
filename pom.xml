@@ -3,7 +3,7 @@
   <groupId>io.softwarity</groupId>
   <artifactId>ldap</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.3</version>
   <name>ldap</name>
   <description>A Java reactive library for LDAP Authentication</description>
   <properties>
@@ -21,7 +21,7 @@
     <connection>scm:git:https://github.com/softwarity/ldap.git</connection>
     <developerConnection>scm:git:https://github.com/softwarity/ldap.git</developerConnection>
     <url>https://github.com/softwarity/ldap</url>
-    <tag>HEAD</tag>
+    <tag>ldap-1.0.3</tag>
   </scm>
   <developers>
     <developer>
