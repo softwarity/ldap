@@ -27,11 +27,16 @@ public class LdapService {
    */
   public <T> Mono<T> getLdapUser(LdapConfiguration ldapConf, String login, String password, BiFunction<String, LdapResult, T> ldapUserSupplier) {
     log.debug("getLdapUser: {}", login);
-    return search(ldapConf, login, password).map((LdapResult ldapResult) -> {
+    return getLdapResult(ldapConf, login, password).map((LdapResult ldapResult) -> {
       return ldapUserSupplier.apply(login, ldapResult);
     });
   }
 
+  public Mono<LdapResult> getLdapResult(LdapConfiguration ldapConf, String login, String password) {
+    log.debug("getLdapResult: {}", login);
+    return search(ldapConf, login, password);
+  }
+  
   private Mono<LdapResult> search(LdapConfiguration ldapConf, String login, String password) {
     return Mono.create(sink -> {
       String searchUser = login;
